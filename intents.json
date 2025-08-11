@@ -1,0 +1,188 @@
+{
+    "intents": [{
+            "tag": "greeting",
+            "patterns": ["Hi", "Hello", "Hey", "Good morning", "Good evening"],
+            "responses": ["Hello!", "Hi there!", "Greetings!", "Hey! How can I help?"],
+            "context": [""]
+        },
+        {
+            "tag": "goodbye",
+            "patterns": ["Bye", "Goodbye", "See you", "Later", "Farewell"],
+            "responses": ["Goodbye!", "See you later!", "Take care!"],
+            "context": [""]
+        },
+        {
+            "tag": "thanks",
+            "patterns": ["Thanks", "Thank you", "Much appreciated"],
+            "responses": ["You're welcome!", "No problem!", "Glad to help!"],
+            "context": [""]
+        },
+        {
+            "tag": "hours",
+            "patterns": ["When are you open?", "What are your hours?", "Opening times?"],
+            "responses": ["We are open from 9am to 6pm, Monday to Friday."],
+            "context": [""]
+        },
+        {
+            "tag": "payments",
+            "patterns": ["How can I pay?", "Do you accept credit cards?", "Payment methods?"],
+            "responses": ["We accept credit cards, PayPal, and cash."],
+            "context": [""]
+        },
+        {
+            "tag": "refund",
+            "patterns": ["What is your refund policy?", "Can I get a refund?", "How to return a product?"],
+            "responses": ["You can request a refund within 30 days of purchase."],
+            "context": [""]
+        },
+        {
+            "tag": "services",
+            "patterns": ["What services do you offer?", "Tell me about your services", "Do you offer support?"],
+            "responses": ["We offer consulting, training, and technical support."],
+            "context": [""]
+        },
+        {
+            "tag": "location",
+            "patterns": ["Where are you located?", "What is your address?", "Office location?"],
+            "responses": ["We are located at 123 Main Street."],
+            "context": [""]
+        },
+        {
+            "tag": "help",
+            "patterns": ["I need help", "Can you help me?", "Help!"],
+            "responses": ["Sure, how can I assist you?"],
+            "context": [""]
+        },
+        {
+            "tag": "current_time",
+            "patterns": ["What time is it?", "Can you tell me the time?", "Current time please?"],
+            "responses": ["Sorry, I can't check the time, please look at your device."],
+            "context": [""]
+        },
+
+        {
+            "tag": "weather",
+            "patterns": ["What's the weather?", "Is it raining?", "Weather forecast?"],
+            "responses": ["I can't check weather but you can try your phone's weather app."],
+            "context": [""]
+        },
+        {
+            "tag": "joke",
+            "patterns": ["Tell me a joke", "Make me laugh", "Funny joke please"],
+            "responses": ["Why did the scarecrow win an award? Because he was outstanding in his field!"],
+            "context": [""]
+        },
+        {
+            "tag": "age",
+            "patterns": ["How old are you?", "What's your age?"],
+            "responses": ["I’m a bot, I don't have an age."],
+            "context": [""]
+        },
+        {
+            "tag": "name",
+            "patterns": ["What’s your name?", "Who are you?"],
+            "responses": ["I am your friendly chatbot."],
+            "context": [""]
+        },
+        {
+            "tag": "creator",
+            "patterns": ["Who made you?", "Who is your creator?"],
+            "responses": ["I was created by a talented developer."],
+            "context": [""]
+        },
+        {
+            "tag": "favorite_color",
+            "patterns": ["What's your favorite color?", "Which color do you like?"],
+            "responses": ["I like all colors equally."],
+            "context": [""]
+        },
+        {
+            "tag": "music",
+            "patterns": ["Do you like music?", "What music do you listen to?"],
+            "responses": ["I enjoy all kinds of music!"],
+            "context": [""]
+        },
+        {
+            "tag": "sports",
+            "patterns": ["Do you like sports?", "What's your favorite sport?"],
+            "responses": ["I’m a fan of virtual sports!"],
+            "context": [""]
+        },
+        {
+            "tag": "movie",
+            "patterns": ["What’s your favorite movie?", "Do you watch movies?"],
+            "responses": ["I don’t watch movies but I’ve heard they are fun!"],
+            "context": [""]
+        },
+        {
+            "tag": "book",
+            "patterns": ["What’s your favorite book?", "Do you read books?"],
+            "responses": ["I love reading data sheets!"],
+            "context": [""]
+        },
+
+
+        {
+            "tag": "order_status",
+            "patterns": ["Where is my order?", "Track my order", "Order status please"],
+            "responses": ["Please provide your order number to check status."],
+            "context": [""]
+        },
+        {
+            "tag": "cancel_order",
+            "patterns": ["I want to cancel my order", "Cancel my order please", "How do I cancel?"],
+            "responses": ["Please contact support to cancel your order."],
+            "context": [""]
+        },
+        {
+            "tag": "shipping",
+            "patterns": ["What are your shipping options?", "Do you ship internationally?", "Shipping cost?"],
+            "responses": ["We offer standard and express shipping worldwide."],
+            "context": [""]
+        },
+        {
+            "tag": "discount",
+            "patterns": ["Do you have discounts?", "Any promotions now?", "Coupon codes?"],
+            "responses": ["Check our website for current promotions and discounts."],
+            "context": [""]
+        },
+
+        {
+            "tag": "technical_issue",
+            "patterns": ["I have a technical problem", "My app isn't working", "Bug report"],
+            "responses": ["Please describe your issue in detail so I can assist."],
+            "context": [""]
+        },
+        {
+            "tag": "feedback",
+            "patterns": ["I want to give feedback", "How can I leave a review?", "Feedback?"],
+            "responses": ["We appreciate your feedback! Please share your thoughts."],
+            "context": [""]
+        },
+        {
+            "tag": "account",
+            "patterns": ["How do I create an account?", "Account signup", "I want to register"],
+            "responses": ["You can sign up by clicking the Register button on our website."],
+            "context": [""]
+        },
+        {
+            "tag": "password_reset",
+            "patterns": ["I forgot my password", "Reset password", "Can you help me recover my password?"],
+            "responses": ["You can reset your password using the 'Forgot Password' link."],
+            "context": [""]
+        },
+
+        {
+            "tag": "contact_support",
+            "patterns": ["How do I contact support?", "Support phone number?", "Customer service contact?"],
+            "responses": ["You can reach support at support@example.com or call 123-456-7890."],
+            "context": [""]
+        },
+        {
+            "tag": "pricing",
+            "patterns": ["How much does it cost?", "What are your prices?", "Tell me your pricing plans"],
+            "responses": ["Please visit our pricing page for detailed information."],
+            "context": [""]
+        }
+    ]
+}

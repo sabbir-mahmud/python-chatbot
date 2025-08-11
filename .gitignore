@@ -1,0 +1,5 @@
+/offline
+/venv
+classes.pkl
+words.pkl
+model.keras

@@ -1,0 +1,291 @@
+[
+    {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "pickle",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "pickle",
+        "description": "pickle",
+        "detail": "pickle",
+        "documentation": {}
+    },
+    {
+        "label": "numpy",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "numpy",
+        "description": "numpy",
+        "detail": "numpy",
+        "documentation": {}
+    },
+    {
+        "label": "tensorflow",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "tensorflow",
+        "description": "tensorflow",
+        "detail": "tensorflow",
+        "documentation": {}
+    },
+    {
+        "label": "WordNetLemmatizer",
+        "importPath": "nltk.stem",
+        "description": "nltk.stem",
+        "isExtraImport": true,
+        "detail": "nltk.stem",
+        "documentation": {}
+    },
+    {
+        "label": "WordNetLemmatizer",
+        "importPath": "nltk.stem",
+        "description": "nltk.stem",
+        "isExtraImport": true,
+        "detail": "nltk.stem",
+        "documentation": {}
+    },
+    {
+        "label": "word_tokenize",
+        "importPath": "nltk.tokenize",
+        "description": "nltk.tokenize",
+        "isExtraImport": true,
+        "detail": "nltk.tokenize",
+        "documentation": {}
+    },
+    {
+        "label": "word_tokenize",
+        "importPath": "nltk.tokenize",
+        "description": "nltk.tokenize",
+        "isExtraImport": true,
+        "detail": "nltk.tokenize",
+        "documentation": {}
+    },
+    {
+        "label": "random",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "random",
+        "description": "random",
+        "detail": "random",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "Dict",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Tuple",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "nltk",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "nltk",
+        "description": "nltk",
+        "detail": "nltk",
+        "documentation": {}
+    },
+    {
+        "label": "clean_up_sentence",
+        "kind": 2,
+        "importPath": "chat",
+        "description": "chat",
+        "peekOfCode": "def clean_up_sentence(sentence):\n    # Tokenize the input sentence into words\n    sentence_words = word_tokenize(sentence)\n    # Lemmatize each word, convert to lowercase, and ignore unwanted characters\n    sentence_words = [\n        lemmatizer.lemmatize(word.lower())\n        for word in sentence_words\n        if word not in ignore_letters\n    ]\n    return sentence_words  # Return the cleaned and lemmatized list of words",
+        "detail": "chat",
+        "documentation": {}
+    },
+    {
+        "label": "bow",
+        "kind": 2,
+        "importPath": "chat",
+        "description": "chat",
+        "peekOfCode": "def bow(sentence, words, show_details=False):\n    # Convert a sentence into a bag-of-words vector\n    sentence_words = clean_up_sentence(sentence)\n    # Initialize a vector of 0's with the same length as the vocabulary\n    bag = [0] * len(words)\n    for s in sentence_words:\n        for i, w in enumerate(words):\n            if w == s:  # If the word is found in the vocabulary\n                bag[i] = 1  # Mark presence in the bag\n                if show_details:  # Optionally print debug info",
+        "detail": "chat",
+        "documentation": {}
+    },
+    {
+        "label": "predict_class",
+        "kind": 2,
+        "importPath": "chat",
+        "description": "chat",
+        "peekOfCode": "def predict_class(sentence, model):\n    # Predict the intent of a given sentence\n    p = bow(sentence, words)  # Convert sentence to bag-of-words\n    # Get prediction probabilities from the model\n    res = model.predict(np.array([p]))[0]\n    ERROR_THRESHOLD = 0.25  # Minimum probability to consider\n    # Filter predictions above the threshold\n    results = [(i, r) for i, r in enumerate(res) if r > ERROR_THRESHOLD]\n    # Sort by probability in descending order\n    results.sort(key=lambda x: x[1], reverse=True)",
+        "detail": "chat",
+        "documentation": {}
+    },
+    {
+        "label": "get_response",
+        "kind": 2,
+        "importPath": "chat",
+        "description": "chat",
+        "peekOfCode": "def get_response(intents_list, intents_json):\n    # Get an appropriate response based on predicted intents\n    if not intents_list:  # If no intent predicted\n        return \"Sorry, I didn't understand that.\"\n    tag = intents_list[0][\"intent\"]  # Get the highest probability intent\n    for i in intents_json[\"intents\"]:\n        if i[\"tag\"] == tag:\n            # Randomly select a response from the matched intent\n            return np.random.choice(i[\"responses\"])\n    return \"Sorry, I didn't understand that.\"  # Fallback response",
+        "detail": "chat",
+        "documentation": {}
+    },
+    {
+        "label": "chat",
+        "kind": 2,
+        "importPath": "chat",
+        "description": "chat",
+        "peekOfCode": "def chat():\n    # Main chat loop for interacting with the bot\n    print(\"Start chatting with the bot (type 'quit' to stop)!\")\n    while True:\n        inp = input(\"You: \")  # Get user input\n        if inp.lower() == \"quit\":  # Exit condition\n            break\n        predicted_intents = predict_class(inp, model)  # Predict intent\n        response = get_response(predicted_intents, intents_json)  # Get bot response\n        print(\"Bot:\", response)  # Display bot response",
+        "detail": "chat",
+        "documentation": {}
+    },
+    {
+        "label": "model",
+        "kind": 5,
+        "importPath": "chat",
+        "description": "chat",
+        "peekOfCode": "model = tf.keras.models.load_model(\"model.keras\")\n# Load the vocabulary list from 'words.pkl' (serialized Python object)\nwords = pickle.load(open(\"words.pkl\", \"rb\"))\n# Load the list of classes (intents) from 'classes.pkl'\nclasses = pickle.load(open(\"classes.pkl\", \"rb\"))\n# Load the intents dataset from 'intents.json' (contains patterns and responses)\nintents_json = json.load(open(\"intents.json\", \"r\", encoding=\"utf-8\"))\n# Initialize the lemmatizer\nlemmatizer = WordNetLemmatizer()\n# Set of characters to ignore during tokenization",
+        "detail": "chat",
+        "documentation": {}
+    },
+    {
+        "label": "words",
+        "kind": 5,
+        "importPath": "chat",
+        "description": "chat",
+        "peekOfCode": "words = pickle.load(open(\"words.pkl\", \"rb\"))\n# Load the list of classes (intents) from 'classes.pkl'\nclasses = pickle.load(open(\"classes.pkl\", \"rb\"))\n# Load the intents dataset from 'intents.json' (contains patterns and responses)\nintents_json = json.load(open(\"intents.json\", \"r\", encoding=\"utf-8\"))\n# Initialize the lemmatizer\nlemmatizer = WordNetLemmatizer()\n# Set of characters to ignore during tokenization\nignore_letters = {\"?\", \"!\", \".\", \",\"}\ndef clean_up_sentence(sentence):",
+        "detail": "chat",
+        "documentation": {}
+    },
+    {
+        "label": "classes",
+        "kind": 5,
+        "importPath": "chat",
+        "description": "chat",
+        "peekOfCode": "classes = pickle.load(open(\"classes.pkl\", \"rb\"))\n# Load the intents dataset from 'intents.json' (contains patterns and responses)\nintents_json = json.load(open(\"intents.json\", \"r\", encoding=\"utf-8\"))\n# Initialize the lemmatizer\nlemmatizer = WordNetLemmatizer()\n# Set of characters to ignore during tokenization\nignore_letters = {\"?\", \"!\", \".\", \",\"}\ndef clean_up_sentence(sentence):\n    # Tokenize the input sentence into words\n    sentence_words = word_tokenize(sentence)",
+        "detail": "chat",
+        "documentation": {}
+    },
+    {
+        "label": "intents_json",
+        "kind": 5,
+        "importPath": "chat",
+        "description": "chat",
+        "peekOfCode": "intents_json = json.load(open(\"intents.json\", \"r\", encoding=\"utf-8\"))\n# Initialize the lemmatizer\nlemmatizer = WordNetLemmatizer()\n# Set of characters to ignore during tokenization\nignore_letters = {\"?\", \"!\", \".\", \",\"}\ndef clean_up_sentence(sentence):\n    # Tokenize the input sentence into words\n    sentence_words = word_tokenize(sentence)\n    # Lemmatize each word, convert to lowercase, and ignore unwanted characters\n    sentence_words = [",
+        "detail": "chat",
+        "documentation": {}
+    },
+    {
+        "label": "lemmatizer",
+        "kind": 5,
+        "importPath": "chat",
+        "description": "chat",
+        "peekOfCode": "lemmatizer = WordNetLemmatizer()\n# Set of characters to ignore during tokenization\nignore_letters = {\"?\", \"!\", \".\", \",\"}\ndef clean_up_sentence(sentence):\n    # Tokenize the input sentence into words\n    sentence_words = word_tokenize(sentence)\n    # Lemmatize each word, convert to lowercase, and ignore unwanted characters\n    sentence_words = [\n        lemmatizer.lemmatize(word.lower())\n        for word in sentence_words",
+        "detail": "chat",
+        "documentation": {}
+    },
+    {
+        "label": "ignore_letters",
+        "kind": 5,
+        "importPath": "chat",
+        "description": "chat",
+        "peekOfCode": "ignore_letters = {\"?\", \"!\", \".\", \",\"}\ndef clean_up_sentence(sentence):\n    # Tokenize the input sentence into words\n    sentence_words = word_tokenize(sentence)\n    # Lemmatize each word, convert to lowercase, and ignore unwanted characters\n    sentence_words = [\n        lemmatizer.lemmatize(word.lower())\n        for word in sentence_words\n        if word not in ignore_letters\n    ]",
+        "detail": "chat",
+        "documentation": {}
+    },
+    {
+        "label": "download_nltk_resources",
+        "kind": 2,
+        "importPath": "train",
+        "description": "train",
+        "peekOfCode": "def download_nltk_resources():\n    resources = [\"punkt\", \"wordnet\", \"omw-1.4\"]  # Required datasets\n    for resource in resources:\n        try:\n            # Check if the resource exists locally\n            if resource == \"punkt\":\n                nltk.data.find(f\"tokenizers/{resource}\")\n            else:\n                nltk.data.find(f\"corpora/{resource}\")\n        except LookupError:",
+        "detail": "train",
+        "documentation": {}
+    },
+    {
+        "label": "load_intents",
+        "kind": 2,
+        "importPath": "train",
+        "description": "train",
+        "peekOfCode": "def load_intents(path: Path) -> Dict:\n    text = path.read_text(encoding=\"utf-8\")  # Read the file content\n    return json.loads(text)  # Parse and return as a Python dictionary\n# Function to preprocess intents data and extract vocabulary, classes, and training documents\ndef preprocess_intents(\n    intents: Dict, ignore_letters: set = None\n) -> Tuple[List[str], List[str], List[Tuple[List[str], str]]]:\n    if ignore_letters is None:\n        ignore_letters = {\"?\", \"!\", \".\", \",\"}  # Characters to ignore\n    lemmatizer = WordNetLemmatizer()  # Initialize lemmatizer",
+        "detail": "train",
+        "documentation": {}
+    },
+    {
+        "label": "preprocess_intents",
+        "kind": 2,
+        "importPath": "train",
+        "description": "train",
+        "peekOfCode": "def preprocess_intents(\n    intents: Dict, ignore_letters: set = None\n) -> Tuple[List[str], List[str], List[Tuple[List[str], str]]]:\n    if ignore_letters is None:\n        ignore_letters = {\"?\", \"!\", \".\", \",\"}  # Characters to ignore\n    lemmatizer = WordNetLemmatizer()  # Initialize lemmatizer\n    words = []  # Store vocabulary words\n    classes = []  # Store intent class labels\n    documents = []  # Store training data as (token_list, intent_tag)\n    # Iterate over each intent in the dataset",
+        "detail": "train",
+        "documentation": {}
+    },
+    {
+        "label": "build_training_data",
+        "kind": 2,
+        "importPath": "train",
+        "description": "train",
+        "peekOfCode": "def build_training_data(\n    words: List[str], classes: List[str], documents: List[Tuple[List[str], str]]\n):\n    training = []  # Store all training samples\n    output_empty = [0] * len(classes)  # Template for output one-hot vector\n    # Create bag-of-words and output label for each document\n    for pattern_tokens, tag in documents:\n        bag = [1 if w in pattern_tokens else 0 for w in words]  # Bag-of-words vector\n        output_row = output_empty.copy()\n        output_row[classes.index(tag)] = 1  # Mark correct intent class",
+        "detail": "train",
+        "documentation": {}
+    },
+    {
+        "label": "build_model",
+        "kind": 2,
+        "importPath": "train",
+        "description": "train",
+        "peekOfCode": "def build_model(input_dim: int, output_dim: int) -> tf.keras.Model:\n    model = tf.keras.Sequential(\n        [\n            tf.keras.layers.Dense(128, input_shape=(input_dim,), activation=\"relu\"),\n            tf.keras.layers.Dropout(0.5),  # Dropout for regularization\n            tf.keras.layers.Dense(64, activation=\"relu\"),\n            tf.keras.layers.Dropout(0.5),\n            tf.keras.layers.Dense(output_dim, activation=\"softmax\"),  # Output layer\n        ]\n    )",
+        "detail": "train",
+        "documentation": {}
+    },
+    {
+        "label": "train_model",
+        "kind": 2,
+        "importPath": "train",
+        "description": "train",
+        "peekOfCode": "def train_model(\n    model: tf.keras.Model,\n    trainX: np.ndarray,\n    trainY: np.ndarray,\n    epochs: int = 200,\n    batch_size: int = 5,\n):\n    # Stop training early if no improvement in loss for 'patience' epochs\n    early_stop = tf.keras.callbacks.EarlyStopping(\n        monitor=\"loss\", patience=8, restore_best_weights=True",
+        "detail": "train",
+        "documentation": {}
+    },
+    {
+        "label": "NLTK_DATA_DIR",
+        "kind": 5,
+        "importPath": "train",
+        "description": "train",
+        "peekOfCode": "NLTK_DATA_DIR = Path(\"./offline/nltk_data\")\n# Create the directory if it doesn't already exist\nNLTK_DATA_DIR.mkdir(parents=True, exist_ok=True)\n# Add the custom directory to NLTK's search paths\nnltk.data.path.insert(0, str(NLTK_DATA_DIR))\n# Function to ensure required NLTK datasets are available locally\ndef download_nltk_resources():\n    resources = [\"punkt\", \"wordnet\", \"omw-1.4\"]  # Required datasets\n    for resource in resources:\n        try:",
+        "detail": "train",
+        "documentation": {}
+    },
+    {
+        "label": "SEED",
+        "kind": 5,
+        "importPath": "train",
+        "description": "train",
+        "peekOfCode": "SEED = 42\nrandom.seed(SEED)\nnp.random.seed(SEED)\ntf.random.set_seed(SEED)\n# Function to load intents data from a JSON file\ndef load_intents(path: Path) -> Dict:\n    text = path.read_text(encoding=\"utf-8\")  # Read the file content\n    return json.loads(text)  # Parse and return as a Python dictionary\n# Function to preprocess intents data and extract vocabulary, classes, and training documents\ndef preprocess_intents(",
+        "detail": "train",
+        "documentation": {}
+    }
+]
